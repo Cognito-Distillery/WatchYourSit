@@ -40,6 +40,7 @@
   let lastCheckTimestamp = 0;
 
   const POSTURE_LABELS: Record<string, string> = {
+    "forward-lean": "앞으로 기울어짐",
     "forward-head": "거북목",
     "shoulder-tilt": "어깨 비대칭",
     "head-tilt": "머리 기울임",
