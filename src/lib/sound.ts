@@ -1,15 +1,11 @@
 let audioCtx: AudioContext | null = null;
 let intervalId: ReturnType<typeof setInterval> | null = null;
-
-function getCtx(): AudioContext {
-  if (!audioCtx) {
-    audioCtx = new AudioContext();
-  }
-  return audioCtx;
-}
+let beepCount = 0;
+const MAX_BEEPS = 10;
 
 function beep() {
-  const ctx = getCtx();
+  if (!audioCtx) audioCtx = new AudioContext();
+  const ctx = audioCtx;
   const osc = ctx.createOscillator();
   const gain = ctx.createGain();
 
@@ -28,8 +24,17 @@ function beep() {
 
 export function startAlarm() {
   if (intervalId) return;
+  beepCount = 0;
   beep();
-  intervalId = setInterval(beep, 1000);
+  beepCount++;
+  intervalId = setInterval(() => {
+    if (beepCount >= MAX_BEEPS) {
+      stopAlarm();
+      return;
+    }
+    beep();
+    beepCount++;
+  }, 1000);
 }
 
 export function stopAlarm() {
