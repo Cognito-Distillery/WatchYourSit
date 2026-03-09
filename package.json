@@ -1,7 +1,7 @@
 {
   "name": "watchyoursit",
   "private": true,
-  "version": "0.0.2",
+  "version": "0.1.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -24,6 +24,7 @@
   "dependencies": {
     "@mediapipe/tasks-vision": "^0.10.32",
     "@tauri-apps/api": "^2.10.1",
-    "@tauri-apps/plugin-notification": "^2.3.3"
+    "@tauri-apps/plugin-notification": "^2.3.3",
+    "@tauri-apps/plugin-updater": "^2.10.0"
   }
 }

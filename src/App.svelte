@@ -11,6 +11,7 @@
     type CameraPosition,
   } from "./lib/posture";
   import { startAlarm, stopAlarm } from "./lib/sound";
+  import { onMount } from "svelte";
 
   type AppState = "idle" | "calibrating" | "monitoring";
 
@@ -203,6 +204,24 @@
   function clearLog() {
     messages = [];
   }
+
+  // Listen for tray toggle-pause event (Tauri only)
+  onMount(() => {
+    let unlisten: (() => void) | undefined;
+    (async () => {
+      try {
+        const { listen } = await import("@tauri-apps/api/event");
+        unlisten = await listen("tray-toggle-pause", () => {
+          if (state === "monitoring") {
+            togglePause();
+          }
+        });
+      } catch {
+        // Not running in Tauri (web mode), ignore
+      }
+    })();
+    return () => unlisten?.();
+  });
 </script>
 
 <div class="layout">
